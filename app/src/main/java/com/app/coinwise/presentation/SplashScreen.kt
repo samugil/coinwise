@@ -1,10 +1,12 @@
-package com.app.coinwise
+package com.app.coinwise.presentation
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import com.app.coinwise.MainActivity
+import com.app.coinwise.R
 
 class SplashScreen : AppCompatActivity() {
 
