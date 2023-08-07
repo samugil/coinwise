@@ -1,4 +1,4 @@
-package com.app.coinwise
+package com.app.coinwise.repository
 
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitModule {
 
-    fun createService(): ServiceInterface{
+    fun createService(): ServiceInterface {
         val logging = HttpLoggingInterceptor()
         logging.apply {
             HttpLoggingInterceptor.Level.BODY

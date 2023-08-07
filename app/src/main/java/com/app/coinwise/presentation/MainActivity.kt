@@ -1,8 +1,11 @@
-package com.app.coinwise
+package com.app.coinwise.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.app.coinwise.R
+import com.app.coinwise.repository.BitcoinResponse
+import com.app.coinwise.repository.RetrofitModule
 import retrofit2.Call
 import retrofit2.Callback
 

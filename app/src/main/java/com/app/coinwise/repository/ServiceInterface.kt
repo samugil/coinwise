@@ -1,5 +1,6 @@
-package com.app.coinwise
+package com.app.coinwise.repository
 
+import com.app.coinwise.repository.BitcoinResponse
 import retrofit2.Call
 import retrofit2.http.GET
 

@@ -1,4 +1,4 @@
-package com.app.coinwise
+package com.app.coinwise.repository
 
 data class BitcoinResponse(
     val name: String,

@@ -1,4 +1,4 @@
-package com.app.coinwise
+package com.app.coinwise.repository
 
 //data class Response(
 //    val values: List<ListDTO>
