@@ -7,7 +7,7 @@ import java.io.Serializable
 @Entity
 data class Table(
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int ): Serializable
 
 
