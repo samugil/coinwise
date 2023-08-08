@@ -14,7 +14,6 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
 
-    <style name="Base.Theme.CoinWise" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="android:windowIsTranslucent">true</item>
