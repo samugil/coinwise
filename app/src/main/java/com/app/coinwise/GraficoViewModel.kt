@@ -1,17 +1,20 @@
 package com.app.coinwise
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.coinwise.data.local.Dao
+import com.app.coinwise.data.local.Table
 import com.app.coinwise.repository.ListDTO
 import com.app.coinwise.repository.RetrofitModule
 import com.app.coinwise.repository.ServiceInterface
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class GraficoViewModel(private val serviceInterface: ServiceInterface): ViewModel() {
+class GraficoViewModel(private val serviceInterface: ServiceInterface, private val dao: Dao): ViewModel() {
 
     private val _bitcoinLiveData = MutableLiveData<List<ListDTO>>()
     val bitcoinLiveData: LiveData<List<ListDTO>> = _bitcoinLiveData
@@ -22,6 +25,7 @@ class GraficoViewModel(private val serviceInterface: ServiceInterface): ViewMode
     init {
         getBitcoinList()
     }
+
 
     private fun getBitcoinList(){
         viewModelScope.launch {
@@ -46,10 +50,18 @@ class GraficoViewModel(private val serviceInterface: ServiceInterface): ViewMode
         }
     }
 
+    private fun insertIntoDataBase(table: Table) {
+        viewModelScope.launch {
+            dao.insert(table)
+        }
+    }
+
     companion object{
-        fun create():GraficoViewModel {
+        fun create(application: Application):GraficoViewModel {
             val bitcoinService = RetrofitModule.createService()
-            return GraficoViewModel(bitcoinService)
+            val databaseInstance = (application as CoinWiseApplication).getAppDataBase()
+            val dao = databaseInstance.Dao()
+            return GraficoViewModel(bitcoinService, dao)
         }
     }
 }

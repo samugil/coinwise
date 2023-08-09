@@ -4,7 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="60dp"
     tools:context=".presentation.MainActivity">
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:id="@+id/line_chart_bitcoin"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:layout_height="match_parent"/>
 
     <ImageView
         android:id="@+id/img_404"
