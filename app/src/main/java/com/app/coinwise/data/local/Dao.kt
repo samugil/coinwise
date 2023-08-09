@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 
+
 @Dao
 interface Dao {
 
@@ -13,7 +14,7 @@ interface Dao {
     suspend fun getAll(): List<Table>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(table: List<Table>)
+    suspend fun insert(table: List<Value>?)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(table: Table)

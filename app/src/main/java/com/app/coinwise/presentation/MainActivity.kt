@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.app.coinwise.GraficoViewModel
 import com.app.coinwise.R
-import com.app.coinwise.repository.ListDTO
+import com.app.coinwise.data.local.Value
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
@@ -40,11 +40,13 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.bitcoinLiveData.observe(this){ bitcoinListDTO->
             val bitcoinList = bitcoinListDTO.map {
-                ListDTO(x = it.x, y = it.y)
+                Value(x = it.x, y = it.y)
             }
 
             updateLineChart(bitcoinList)
         }
+
+        //viewModel.insertIntoDataBase()
 
         viewModel.errorLiveData.observe(this){ errorMsg ->
             Log.d("ErrorData", "LiveData observed with value: $errorMsg")
@@ -70,9 +72,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun updateLineChart(bitcoinList: List<ListDTO>) {
+    private fun updateLineChart(bitcoinList: List<Value>) {
         val entries = bitcoinList.mapIndexed { _, listDTO ->
-            Entry(listDTO.x.toFloat(), listDTO.y)
+            Entry(listDTO.x.toFloat(), listDTO.y.toFloat())
         }
         val lineDataSet = LineDataSet(entries, "Bitcoin Price")
         lineDataSet.color = resources.getColor(R.color.green_500)

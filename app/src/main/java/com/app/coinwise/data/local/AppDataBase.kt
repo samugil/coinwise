@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 
-@Database(entities = [Table::class], version = 1)
+@Database(entities = [Table::class,Value::class], version = 1)
+@TypeConverters(CoinWiseTypeConverter::class)
 abstract class AppDataBase : RoomDatabase(){
 
     abstract fun Dao(): Dao

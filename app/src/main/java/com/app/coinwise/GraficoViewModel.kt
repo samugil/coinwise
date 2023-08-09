@@ -6,21 +6,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.coinwise.data.local.AppDataBase
 import com.app.coinwise.data.local.Dao
 import com.app.coinwise.data.local.Table
+import com.app.coinwise.data.local.Value
 import com.app.coinwise.repository.CoinWiseRepository
-import com.app.coinwise.repository.ListDTO
 import com.app.coinwise.repository.RetrofitModule
 import com.app.coinwise.repository.ServiceInterface
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class GraficoViewModel(private val serviceInterface: ServiceInterface, private val repository: CoinWiseRepository): ViewModel() {
+class GraficoViewModel(private val serviceInterface: ServiceInterface, private var repository: CoinWiseRepository,
+    private val dao:Dao): ViewModel() {
 
     private val _table= MutableLiveData<List<Table>>()
     val table: LiveData<List<Table>> = _table
-    private val _bitcoinLiveData = MutableLiveData<List<ListDTO>>()
-    val bitcoinLiveData: LiveData<List<ListDTO>> = _bitcoinLiveData
+    private val _bitcoinLiveData = MutableLiveData<List<Value>>()
+    val bitcoinLiveData: LiveData<List<Value>> = _bitcoinLiveData
 
     private val _errorLiveData = MutableLiveData<Int>()
     val errorLiveData: LiveData<Int> = _errorLiveData
@@ -38,7 +40,9 @@ class GraficoViewModel(private val serviceInterface: ServiceInterface, private v
                     _errorLiveData.value = 333
                 } else {
                     _bitcoinLiveData.value = bitcoinList.values
+                    dao.insert(bitcoinList.values)
                 }
+
             }
             catch (ex:Exception){
                 ex.printStackTrace()
@@ -53,20 +57,21 @@ class GraficoViewModel(private val serviceInterface: ServiceInterface, private v
         }
     }
 
-    private fun insertIntoDataBase() {
-        viewModelScope.launch {
-            val listApi = getBitcoinList()
-            repository.saveList(_bitcoinLiveData.value)
-            _table.value = repository.getList()
-        }
-    }
+//    fun insertIntoDataBase() {
+//        viewModelScope.launch {
+//            dao. = getBitcoinList()
+//            repository.saveList(_bitcoinLiveData.value)
+//            _table.value = repository.getList()
+//        }
+//    }
 
     companion object{
-        fun create(application: Application):GraficoViewModel {
+        fun create(application: Application, ):GraficoViewModel {
             val bitcoinService = RetrofitModule.createService()
-            val databaseInstance = (application as CoinWiseApplication).getAppDataBase()
-            val dao = databaseInstance.Dao()
-            return GraficoViewModel(bitcoinService, dao)
+            val coinWiseDao = AppDataBase.getInstance(application).Dao()
+            val repository:CoinWiseRepository = CoinWiseRepository(coinWiseDao)
+
+            return GraficoViewModel(bitcoinService,repository, coinWiseDao)
         }
     }
 }
