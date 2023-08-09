@@ -1,8 +1,6 @@
 package com.app.coinwise.repository
 
 data class BitcoinResponse(
-    val name: String,
-    val unit: String,
     val values: List<ListDTO>
 )
 
