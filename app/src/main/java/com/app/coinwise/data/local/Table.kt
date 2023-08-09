@@ -5,10 +5,9 @@ import androidx.room.PrimaryKey
 import com.app.coinwise.repository.ListDTO
 import java.io.Serializable
 
-@Entity
+@Entity (tableName = "table")
 data class Table(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey val id: Int = 1,
     val name: String,
     val unit: String,
     val period: String,

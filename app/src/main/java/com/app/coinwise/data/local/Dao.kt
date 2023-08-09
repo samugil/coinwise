@@ -10,15 +10,15 @@ import androidx.room.Update
 interface Dao {
 
     @Query("SELECT * FROM 'Table'")
-    fun getAll(): List<Table>
+    suspend fun getAll(): List<Table>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(table: Table)
+    suspend fun insert(table: List<Table>)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun update(table: Table)
+    suspend fun update(table: Table)
 
     @Query("DELETE FROM 'Table' where id=:id")
-    fun delete(id: Int)
+    suspend fun delete(id: Int)
 
 }
