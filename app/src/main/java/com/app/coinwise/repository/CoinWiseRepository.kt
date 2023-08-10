@@ -1,62 +1,59 @@
 package com.app.coinwise.repository
 
-import android.util.Log
+
 import com.app.coinwise.data.local.Dao
-import com.app.coinwise.data.local.DaoValue
 import com.app.coinwise.data.local.Table
 import com.app.coinwise.data.local.Value
+import com.app.coinwise.data.remote.ItemDto
+import com.app.coinwise.data.remote.Service
+import retrofit2.Response
 
 
 
-class CoinWiseRepository (private val dao: Dao, private val valueDao: DaoValue, private val serviceInterface: ServiceInterface) {
+class CoinWiseRepository(
+    private val local: Dao,
+    private val remote: Service
+) {
 
-//    suspend fun saveList (table: List<Value>?){
-//        dao.insert(table)
-//
-//    }
-//
-//    suspend fun getList(): List<Table>{
-//
-//        return dao.getAll()
-//
-//    }
 
-    // Essa função vai dentro do "Query" e pega a ultima atualização
-    // Se for diferente de null, ela vai buscar on-line e salva no banco de dados
-    // Se for null, vai mostrar o ultimo que foi salvo
-    suspend fun bitcoinData(): Table? {
-        try {
-            val bitcoinOff = dao.getLastBitcoin()
-            if (bitcoinOff != null) {
-                return bitcoinOff
-            } else {
-                val response = serviceInterface.bitcoin()
-                if (response.isSuccessful) {
-                    val bitcoin = response.body()
-                    bitcoin?.let {
-                        priceBitcoin(bitcoin)
-                    }
-                    return bitcoin
-                } else {
-                    // Handle API call error if needed
-                    Log.e("TAGY", "API call failed with code: ${response.code()}")
-                }
+    val chartItem = local.getLastChartItem()
+
+    suspend fun getChartItems(): Response<ItemDto> {
+        return remote.getChartItemsApi()
+    }
+    suspend fun refreshChartItems() {
+
+        val response = remote.getChartItemsApi()
+        if (response.isSuccessful) {
+            val bitcoin = response.body()
+            bitcoin?.let { itemDto ->
+                insertChartItem(itemDto)
             }
 
-        } catch (ex: Exception) {
-            // Handle other exceptions if needed
-            Log.e("TAGY", "Exception: ${ex.message}")
-        }
-
-        return null
-    }
-
-    // Aqui estamos inserindo o valores da Table dentro do Dao
-    // E o "ForEach" usamos para percorrer a table
-    private suspend fun priceBitcoin(table: Table){
-        dao.insert(table)
-        table.values.forEach {
-            valueDao.insertValue(it)
         }
     }
+
+
+    private suspend fun insertChartItem(chartItem: ItemDto) {
+        val table = mapItemToChart(chartItem)
+        local.insert(table)
+
+    }
+
+    private fun mapItemToChart(itemDto: ItemDto): Table {
+        return Table(
+            description = itemDto.description,
+            name = itemDto.name,
+            period = itemDto.period,
+            status = itemDto.status,
+            unit = itemDto.unit,
+            values = itemDto.values.map { axisDto ->
+                Value(
+                    x = axisDto.x,
+                    y = axisDto.y
+                )
+            }
+        )
+    }
+
 }

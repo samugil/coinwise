@@ -1,4 +1,4 @@
-package com.app.coinwise.repository
+package com.app.coinwise.data.remote
 
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitModule {
 
-    fun createService(): ServiceInterface {
+    fun createService(): Service {
         val logging = HttpLoggingInterceptor()
         logging.apply {
             HttpLoggingInterceptor.Level.BODY
@@ -24,6 +24,6 @@ object RetrofitModule {
             .baseUrl("https://api.blockchain.info/")
             .addConverterFactory(GsonConverterFactory.create(Gson()))
 
-        return retrofit.build().create(ServiceInterface::class.java)
+        return retrofit.build().create(Service::class.java)
     }
 }

@@ -1,12 +1,14 @@
 package com.app.coinwise.presentation
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import com.app.coinwise.GraficoViewModel
 import com.app.coinwise.R
 import com.app.coinwise.data.local.Value
 import com.github.mikephil.charting.charts.LineChart
@@ -15,6 +17,8 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,39 +42,52 @@ class MainActivity : AppCompatActivity() {
         img500 = findViewById(R.id.img_500)
         img333 = findViewById(R.id.img_333)
 
-        viewModel.bitcoinLiveData.observe(this){ bitcoinListDTO->
-            val bitcoinList = bitcoinListDTO.map {
-                Value(x = it.x, y = it.y)
-            }
+        viewModel.errorLiveData.observe(this) { errorMsg ->
+            img404.visibility = if (errorMsg == 404) View.VISIBLE else View.GONE
+            img500.visibility = if (errorMsg == 500) View.VISIBLE else View.GONE
+            img333.visibility = if (errorMsg == 333) View.VISIBLE else View.GONE
 
-            updateLineChart(bitcoinList)
+            val message = when (errorMsg) {
+                404 -> "Pagina não encontrada"
+                500 -> "Erro na conexão"
+                333 -> "A pagina está vazia"
+                else -> "Erro desconhecido"
+            }
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
 
-        //viewModel.insertIntoDataBase()
-
-        viewModel.errorLiveData.observe(this){ errorMsg ->
-            Log.d("ErrorData", "LiveData observed with value: $errorMsg")
-            when (errorMsg){
-                404 -> {
-                    img404.visibility = View.VISIBLE
-                    Toast.makeText(this, "Pagina não encontrada", Toast.LENGTH_LONG).show()
-                }
-                500 -> {
-                    img500.visibility = View.VISIBLE
-                    Toast.makeText(this, "Erro na conexão", Toast.LENGTH_LONG).show()
-                }
-                333 ->{
-                    img333.visibility = View.VISIBLE
-                    Toast.makeText(this, "A pagina está vazia", Toast.LENGTH_LONG).show()
-                }
-            }
-        }
     }
+
 
     override fun onStart() {
         super.onStart()
 
+        if (isNetworkAvailable(this)) {
+            viewModel.refreshChartItem()
+        } else {
+            viewModel.chartItem.observe(this) { chartItem ->
+                updateLineChart(chartItem.values)
+            }
+        }
     }
+
+
+    fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val network = connectivityManager.activeNetwork
+            val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+            return networkCapabilities != null &&
+                    (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
+        } else {
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected
+        }
+    }
+
 
     private fun updateLineChart(bitcoinList: List<Value>) {
         val entries = bitcoinList.mapIndexed { _, listDTO ->
@@ -98,6 +115,6 @@ class MainActivity : AppCompatActivity() {
         lineChartBitcoin.setPinchZoom(false)
         lineChartBitcoin.description = Description().apply { text = "Bitcoin Market Price" }
         lineChartBitcoin.setBackgroundColor(resources.getColor(R.color.white))
-        lineChartBitcoin.animateXY(3000,3000)
+        lineChartBitcoin.animateXY(3000, 3000)
     }
 }

@@ -2,9 +2,8 @@ package com.app.coinwise.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.Serializable
 
-@Entity (tableName = "table")
+@Entity
 data class Table(
     @PrimaryKey val id: Int = 1,
     val description: String,
