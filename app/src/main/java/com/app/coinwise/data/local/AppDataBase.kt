@@ -12,6 +12,8 @@ import androidx.room.TypeConverters
 abstract class AppDataBase : RoomDatabase(){
 
     abstract fun Dao(): Dao
+    // So estamos chamando a nova DaoValue
+    abstract fun DaoValue(): DaoValue
 
     companion object {
         @Volatile

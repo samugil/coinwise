@@ -10,16 +10,22 @@ import androidx.room.Update
 @Dao
 interface Dao {
 
-    @Query("SELECT * FROM 'Table'")
-    suspend fun getAll(): List<Table>
+    @Query("SELECT * FROM 'table' ORDER BY id DESC LIMIT 1")
+    suspend fun getLastBitcoin(): Table?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(table: List<Value>?)
+    suspend fun insert(bitcoin: Table)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(table: Table)
-
-    @Query("DELETE FROM 'Table' where id=:id")
-    suspend fun delete(id: Int)
+//    @Query("SELECT * FROM 'Table'")
+//    suspend fun getAll(): List<Table>
+//
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun insert(table: List<Value>?)
+//
+//    @Update(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun update(table: Table)
+//
+//    @Query("DELETE FROM 'Table' where id=:id")
+//    suspend fun delete(id: Int)
 
 }

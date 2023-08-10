@@ -16,62 +16,46 @@ import com.app.coinwise.repository.ServiceInterface
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class GraficoViewModel(private val serviceInterface: ServiceInterface, private var repository: CoinWiseRepository,
-    private val dao:Dao): ViewModel() {
+
+class GraficoViewModel(private val repository: CoinWiseRepository): ViewModel() {
 
     private val _table= MutableLiveData<List<Table>>()
     val table: LiveData<List<Table>> = _table
     private val _bitcoinLiveData = MutableLiveData<List<Value>>()
-    val bitcoinLiveData: LiveData<List<Value>> = _bitcoinLiveData
+    val bitcoinLiveData: LiveData<List<Value>> get() =  _bitcoinLiveData
 
     private val _errorLiveData = MutableLiveData<Int>()
     val errorLiveData: LiveData<Int> = _errorLiveData
+
+    //    // LiveData to hold the entire Bitcoin data
+    private val _bitcoinData = MutableLiveData<Table?>()
+    private val bitcoinData: LiveData<Table?> get() = _bitcoinData
 
     init {
         getBitcoinList()
     }
 
-
-    private fun getBitcoinList(){
+    // Aqui está chamando o repository
+    // Pegando o valor que veio dentro da função de dentro do repository
+    fun getBitcoinList(){
         viewModelScope.launch {
             try {
-                val bitcoinList = serviceInterface.bitcoin()
-                if (bitcoinList.values.isEmpty()){
-                    _errorLiveData.value = 333
-                } else {
-                    _bitcoinLiveData.value = bitcoinList.values
-                    dao.insert(bitcoinList.values)
-                }
-
-            }
-            catch (ex:Exception){
-                ex.printStackTrace()
-                if (ex is HttpException) {
-                    val errorCode = ex.code()
-                    _errorLiveData.value = errorCode
-                    Log.e("BitcoinData", "HTTP Error code: $errorCode")
-                } else {
-                    Log.e("BitcoinData", "Error fetching Bitcoin data: ${ex.message}")
-                }
+                val bitcoin = repository.bitcoinData()
+                _bitcoinData.value = bitcoin
+                _bitcoinLiveData.value = bitcoin?.values ?: emptyList()
+            } catch (ex: Exception){
+                Log.e("TAGY", "Exception: ${ex.message}")
             }
         }
     }
-
-//    fun insertIntoDataBase() {
-//        viewModelScope.launch {
-//            dao. = getBitcoinList()
-//            repository.saveList(_bitcoinLiveData.value)
-//            _table.value = repository.getList()
-//        }
-//    }
-
     companion object{
         fun create(application: Application, ):GraficoViewModel {
             val bitcoinService = RetrofitModule.createService()
             val coinWiseDao = AppDataBase.getInstance(application).Dao()
-            val repository:CoinWiseRepository = CoinWiseRepository(coinWiseDao)
+            val valueDao = AppDataBase.getInstance(application).DaoValue()
+            val repository:CoinWiseRepository = CoinWiseRepository(coinWiseDao, valueDao, bitcoinService)
 
-            return GraficoViewModel(bitcoinService,repository, coinWiseDao)
+            return GraficoViewModel(repository)
         }
     }
 }
