@@ -13,7 +13,6 @@ data class Table(
     val unit: String,
     val period: String,
     val description: String,
-    val values: List<ListDTO>
     ): Serializable
 
 

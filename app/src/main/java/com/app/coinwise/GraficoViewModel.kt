@@ -13,6 +13,8 @@ import com.app.coinwise.repository.RetrofitModule
 import com.app.coinwise.repository.ServiceInterface
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class GraficoViewModel(private val serviceInterface: ServiceInterface, private val dao: Dao): ViewModel() {
 
@@ -54,6 +56,12 @@ class GraficoViewModel(private val serviceInterface: ServiceInterface, private v
         viewModelScope.launch {
             dao.insert(table)
         }
+    }
+
+    fun convertUnixTimestampToDateFormat(unixTimestamp: Int): String {
+        val date = Date(unixTimestamp.toLong() * 1000)
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return sdf.format(date)
     }
 
     companion object{
