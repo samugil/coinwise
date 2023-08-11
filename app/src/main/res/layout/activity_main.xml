@@ -7,12 +7,103 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/gafico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="180dp"
+        tools:text="Grafico" />
+
+    <TextView
+        android:id="@+id/valor1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="550dp"
+        android:layout_marginRight="300dp"
+        tools:text="Valor1" />
+
+    <TextView
+        android:id="@+id/porcentagem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="550dp"
+        android:layout_marginStart="260dp"
+        tools:text="Pocentagem" />
+
+
+    <TextView
+        android:id="@+id/valor2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="230dp"
+        android:layout_marginEnd="130dp"
+        tools:text="Valor2" />
+    <TextView
+        android:id="@+id/valor3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="210dp"
+        android:layout_marginEnd="130dp"
+        tools:text="Valor3" />
+    <TextView
+        android:id="@+id/valor4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="190dp"
+        android:layout_marginEnd="130dp"
+        tools:text="Valor4" />
+
+    <TextView
+        android:id="@+id/valor5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="230dp"
+        android:layout_marginStart="310dp"
+        tools:text="Valor5" />
+
+    <TextView
+        android:id="@+id/valor6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="210dp"
+        android:layout_marginStart="310dp"
+        tools:text="Valor6" />
+
+    <TextView
+        android:id="@+id/valor7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="190dp"
+        android:layout_marginStart="310dp"
+        tools:text="Valor7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
