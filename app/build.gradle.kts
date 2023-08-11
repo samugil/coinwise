@@ -54,6 +54,9 @@ dependencies {
     // Saved state module for ViewModel
     implementation ("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
 
+    //Refresh
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+
     //Network
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")

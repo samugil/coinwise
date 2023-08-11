@@ -9,10 +9,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.coinwise.R
 import com.app.coinwise.data.local.Value
-import com.app.coinwise.data.remote.AxisDto
-import com.app.coinwise.data.remote.ItemDto
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
@@ -20,10 +19,9 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 
-
-
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var swipeToRefresh: SwipeRefreshLayout
     private lateinit var img404: ImageView
     private lateinit var img500: ImageView
     private lateinit var img333: ImageView
@@ -37,7 +35,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        swipeToRefresh = findViewById(R.id.swipeToRefresh)
         lineChartBitcoin = findViewById(R.id.line_chart_bitcoin)
+        refreshApp()
         setUpLineCharts()
 
         img404 = findViewById(R.id.img_404)
@@ -46,12 +47,13 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.errorLiveData.observe(this) { errorMsg ->
             img404.visibility = if (errorMsg == 404) View.VISIBLE else View.GONE
-            img500.visibility = if (errorMsg == 500) View.VISIBLE else View.GONE
+            if (errorMsg == 500) Toast.makeText(this, "Sem conexão de internet", Toast.LENGTH_LONG).show()
             img333.visibility = if (errorMsg == 333) View.VISIBLE else View.GONE
 
             val message = when (errorMsg) {
                 404 -> "Pagina não encontrada"
-                500 -> "Erro na conexão"
+                // está comentado porque aparece dois Toats, depois vemos qual deixamos
+//                500 -> "Erro na conexão"
                 333 -> "A pagina está vazia"
                 else -> "Erro desconhecido"
             }
@@ -73,6 +75,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun refreshApp(){
+
+        swipeToRefresh.setOnRefreshListener {
+
+            isNetworkAvailable(this)
+
+            Toast.makeText(this, "Pagina atualizada", Toast.LENGTH_SHORT).show()
+            swipeToRefresh.isRefreshing = false
+        }
+    }
 
     fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager =
