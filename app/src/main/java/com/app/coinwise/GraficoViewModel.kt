@@ -7,20 +7,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.coinwise.data.local.AppDataBase
-import com.app.coinwise.data.local.Dao
 import com.app.coinwise.data.local.Table
 import com.app.coinwise.data.local.Value
 import com.app.coinwise.repository.CoinWiseRepository
 import com.app.coinwise.repository.RetrofitModule
-import com.app.coinwise.repository.ServiceInterface
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
-
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class GraficoViewModel(private val repository: CoinWiseRepository): ViewModel() {
 
     private val _table= MutableLiveData<List<Table>>()
     val table: LiveData<List<Table>> = _table
+
     private val _bitcoinLiveData = MutableLiveData<List<Value>>()
     val bitcoinLiveData: LiveData<List<Value>> get() =  _bitcoinLiveData
 
@@ -48,12 +48,18 @@ class GraficoViewModel(private val repository: CoinWiseRepository): ViewModel() 
             }
         }
     }
+
+    fun convertUnixTimestampToDateFormat(unixTimestamp: Int): String {
+        val date = Date(unixTimestamp.toLong() * 1000)
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return sdf.format(date)
+    }
     companion object{
         fun create(application: Application, ):GraficoViewModel {
             val bitcoinService = RetrofitModule.createService()
             val coinWiseDao = AppDataBase.getInstance(application).Dao()
             val valueDao = AppDataBase.getInstance(application).DaoValue()
-            val repository:CoinWiseRepository = CoinWiseRepository(coinWiseDao, valueDao, bitcoinService)
+            val repository: CoinWiseRepository = CoinWiseRepository(coinWiseDao, valueDao, bitcoinService)
 
             return GraficoViewModel(repository)
         }
