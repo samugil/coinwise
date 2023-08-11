@@ -48,9 +48,10 @@ class GraficoViewModel(private val repository: CoinWiseRepository): ViewModel() 
         viewModelScope.launch {
             try {
                 val response = repository.getChartItems()
+                repository.refreshChartItems()
                 if (!response.isSuccessful) {
                     _errorLiveData.postValue(response.code())
-                    repository.refreshChartItems()
+
                 }
             } catch (ex: Exception) {
                 _errorLiveData.postValue(500) // Erro genérico de conexão

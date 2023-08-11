@@ -11,6 +11,8 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.app.coinwise.R
 import com.app.coinwise.data.local.Value
+import com.app.coinwise.data.remote.AxisDto
+import com.app.coinwise.data.remote.ItemDto
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.Entry
