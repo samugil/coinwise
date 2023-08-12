@@ -19,11 +19,11 @@ class CoinWiseRepository(
     val chartItem = local.getLastChartItem()
 
     suspend fun getChartItems(): Response<ItemDto> {
-        return remote.getChartItemsApi()
+        return remote.getChartItemsApi1year("1year")
     }
     suspend fun refreshChartItems() {
 
-        val response = remote.getChartItemsApi()
+        val response = remote.getChartItemsApi1year("1year")
         if (response.isSuccessful) {
             val bitcoin = response.body()
             bitcoin?.let { itemDto ->

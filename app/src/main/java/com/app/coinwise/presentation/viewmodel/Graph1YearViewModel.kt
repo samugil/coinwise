@@ -1,4 +1,4 @@
-package com.app.coinwise.presentation
+package com.app.coinwise.presentation.viewmodel
 
 import android.app.Application
 import android.util.Log
@@ -8,13 +8,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.coinwise.data.local.AppDataBase
 import com.app.coinwise.data.local.Table
-import com.app.coinwise.repository.CoinWiseRepository
 import com.app.coinwise.data.remote.RetrofitModule
+import com.app.coinwise.repository.CoinWiseRepository
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
-
-
-class GraficoViewModel(private val repository: CoinWiseRepository): ViewModel() {
+class Graph1YearViewModel(private val repository: CoinWiseRepository) : ViewModel() {
 
 
     val chartItem: LiveData<Table> = repository.chartItem
@@ -24,24 +24,9 @@ class GraficoViewModel(private val repository: CoinWiseRepository): ViewModel() 
     val errorLiveData: LiveData<Int> = _errorLiveData
 
 
-
     init {
         refreshChartItem()
     }
-
-
-
-    // Aqui está chamando o repository
-    // Pegando o valor que veio dentro da função de dentro do repository
-//    private fun refreshChartItem(){
-//        viewModelScope.launch {
-//            try {
-//                repository.refreshChartItems()
-//            } catch (ex: Exception){
-//                Log.e("TAGY", "Exception: ${ex.message}")
-//            }
-//        }
-//    }
 
 
     fun refreshChartItem() {
@@ -60,13 +45,19 @@ class GraficoViewModel(private val repository: CoinWiseRepository): ViewModel() 
         }
     }
 
+    fun convertUnixTimestampToDateFormat(unixTimestamp: Int): String {
+        val date = Date(unixTimestamp.toLong() * 1000)
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return sdf.format(date)
+    }
+
     companion object{
-        fun create(application: Application, ): GraficoViewModel {
+        fun create(application: Application): Graph1YearViewModel {
             val bitcoinService = RetrofitModule.createService()
             val coinWiseDao = AppDataBase.getInstance(application).Dao()
             val repository = CoinWiseRepository(coinWiseDao, bitcoinService)
 
-            return GraficoViewModel(repository)
+            return Graph1YearViewModel(repository)
         }
     }
 }

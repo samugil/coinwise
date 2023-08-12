@@ -54,6 +54,10 @@ dependencies {
     // Saved state module for ViewModel
     implementation ("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
 
+    // Fragment
+    val fragment_version = "1.5.6"
+    implementation ("androidx.fragment:fragment-ktx:$fragment_version")
+
     //Network
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
