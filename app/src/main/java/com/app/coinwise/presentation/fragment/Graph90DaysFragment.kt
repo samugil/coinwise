@@ -1,6 +1,7 @@
 package com.app.coinwise.presentation.fragment
 
 import android.content.Context
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -29,7 +30,6 @@ class Graph90DaysFragment : Fragment(), OnChartValueSelectedListener {
     private lateinit var lineChartBitcoin: LineChart
     private lateinit var textViewData: TextView
 
-    // Vamos tentar manter todos os Fragments usando o Graph1YearViewModel como ViewModel para ver se funciona
     private val viewModel : Graph1YearViewModel by lazy {
         Graph1YearViewModel.create(requireActivity().application)
     }
@@ -83,8 +83,8 @@ class Graph90DaysFragment : Fragment(), OnChartValueSelectedListener {
 
 
     private fun updateLineChart(bitcoinList: List<Value>) {
-        val last30BitcoinList = bitcoinList.takeLast(90)
-        val entries = last30BitcoinList.mapIndexed { _, value ->
+        val last90BitcoinList = bitcoinList.takeLast(90)
+        val entries = last90BitcoinList.mapIndexed { _, value ->
             Entry(value.x.toFloat(), value.y.toFloat())
         }
 
@@ -103,6 +103,8 @@ class Graph90DaysFragment : Fragment(), OnChartValueSelectedListener {
         lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
         lineDataSet.highLightColor = resources.getColor(R.color.black)
         lineDataSet.lineWidth = 0.5f
+        lineDataSet.valueTextSize = 0f
+        lineDataSet.valueTextColor = Color.TRANSPARENT
 
         val dataSets: ArrayList<ILineDataSet> = ArrayList()
         dataSets.add(lineDataSet)
@@ -126,7 +128,7 @@ class Graph90DaysFragment : Fragment(), OnChartValueSelectedListener {
         lineChartBitcoin.setTouchEnabled(true)
         lineChartBitcoin.setPinchZoom(false)
         lineChartBitcoin.setBackgroundColor(resources.getColor(R.color.white))
-        lineChartBitcoin.animateXY(1200,1200)
+        lineChartBitcoin.animateX(1000)
         lineChartBitcoin.description.isEnabled = false
         lineChartBitcoin.isDragEnabled = false
         lineChartBitcoin.setScaleEnabled(false)
@@ -160,7 +162,7 @@ class Graph90DaysFragment : Fragment(), OnChartValueSelectedListener {
             val xValue = e.x.toInt()
             val yValue = e.y
             val xValueFormatted = viewModel.convertUnixTimestampToDateFormat(xValue)
-            textViewData.text = "$xValueFormatted - Preço: $$yValue"
+            textViewData.text = "$xValueFormatted - US$ $yValue"
 
         }
     }

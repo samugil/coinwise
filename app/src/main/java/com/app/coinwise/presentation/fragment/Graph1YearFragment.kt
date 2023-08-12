@@ -1,6 +1,8 @@
 package com.app.coinwise.presentation.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -28,6 +30,12 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
 
     private lateinit var lineChartBitcoin: LineChart
     private lateinit var textViewData: TextView
+    private lateinit var textViewOpen: TextView
+    private lateinit var textViewMaximo: TextView
+    private lateinit var textViewMedia: TextView
+    private lateinit var textViewClose: TextView
+    private lateinit var textViewMinimo: TextView
+    private lateinit var textViewDiferenca: TextView
 
     private val viewModel : Graph1YearViewModel by lazy {
         Graph1YearViewModel.create(requireActivity().application)
@@ -44,6 +52,12 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         super.onViewCreated(view, savedInstanceState)
         lineChartBitcoin = view.findViewById(R.id.line_chart_bitcoin_1year)
         textViewData = view.findViewById(R.id.text_view_dados_1year)
+        textViewOpen = view.findViewById(R.id.text_view_open_1year)
+        textViewMaximo = view.findViewById(R.id.text_view_maximo_1year)
+        textViewMedia = view.findViewById(R.id.text_view_media_1year)
+        textViewClose = view.findViewById(R.id.text_view_close_1year)
+        textViewMinimo = view.findViewById(R.id.text_view_minimo_1year)
+        textViewDiferenca = view.findViewById(R.id.text_view_diferenca_1year)
         setUpLineCharts()
 
     }
@@ -83,8 +97,8 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun updateLineChart(bitcoinList: List<Value>) {
-        // val last30BitcoinList = bitcoinList.takeLast(90)
         val entries = bitcoinList.mapIndexed { _, value ->
             Entry(value.x.toFloat(), value.y.toFloat())
         }
@@ -93,6 +107,21 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         entries.forEachIndexed { index, entry ->
             Log.d("Entry Debug", "Entry $index - x: ${entry.x}, y: ${entry.y}")
         }
+
+        val highestValue = entries.maxByOrNull { it.y }?.y ?: 0f
+        val lowestValue = entries.minByOrNull { it.y }?.y ?: 0f
+        val averageValue = entries.map { it.y }.average()
+        val formattedAverageValue = String.format("%.2f", averageValue)
+        val firstEntryYValue = entries.firstOrNull()?.y ?: 0f
+        val lastEntryYValue = entries.lastOrNull()?.y ?: 0f
+        val difference = lastEntryYValue - firstEntryYValue
+
+        textViewMaximo.text = "Máx: US$ $highestValue"
+        textViewMedia.text = "Média: US$ $formattedAverageValue"
+        textViewOpen.text = "Open: US$ $firstEntryYValue"
+        textViewClose.text = "Close: US$ $lastEntryYValue"
+        textViewMinimo.text = "Min: US$ $lowestValue"
+        textViewDiferenca.text = "Diferença: US$ $difference"
 
         val lineDataSet = LineDataSet(entries, "Bitcoin Price")
         lineDataSet.color = resources.getColor(R.color.green_500)
@@ -104,6 +133,8 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
         lineDataSet.highLightColor = resources.getColor(R.color.black)
         lineDataSet.lineWidth = 0.5f
+        lineDataSet.valueTextSize = 0f
+        lineDataSet.valueTextColor = Color.TRANSPARENT
 
         val dataSets: ArrayList<ILineDataSet> = ArrayList()
         dataSets.add(lineDataSet)
@@ -119,7 +150,6 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         }
 
         lineChartBitcoin.invalidate()
-
     }
 
     private fun setUpLineCharts() {
@@ -127,7 +157,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         lineChartBitcoin.setTouchEnabled(true)
         lineChartBitcoin.setPinchZoom(false)
         lineChartBitcoin.setBackgroundColor(resources.getColor(R.color.white))
-        lineChartBitcoin.animateXY(1200,1200)
+        lineChartBitcoin.animateX(1000)
         lineChartBitcoin.description.isEnabled = false
         lineChartBitcoin.isDragEnabled = false
         lineChartBitcoin.setScaleEnabled(false)
@@ -161,7 +191,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
             val xValue = e.x.toInt()
             val yValue = e.y
             val xValueFormatted = viewModel.convertUnixTimestampToDateFormat(xValue)
-            textViewData.text = "$xValueFormatted - Preço: $$yValue"
+            textViewData.text = "$xValueFormatted - US$ $yValue"
 
         }
     }
