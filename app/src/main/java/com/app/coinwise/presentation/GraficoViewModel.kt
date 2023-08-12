@@ -30,20 +30,6 @@ class GraficoViewModel(private val repository: CoinWiseRepository): ViewModel() 
     }
 
 
-
-    // Aqui está chamando o repository
-    // Pegando o valor que veio dentro da função de dentro do repository
-//    private fun refreshChartItem(){
-//        viewModelScope.launch {
-//            try {
-//                repository.refreshChartItems()
-//            } catch (ex: Exception){
-//                Log.e("TAGY", "Exception: ${ex.message}")
-//            }
-//        }
-//    }
-
-
     fun refreshChartItem() {
         viewModelScope.launch {
             try {
