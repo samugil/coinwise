@@ -7,6 +7,9 @@
     tools:context=".presentation.MainActivity">
 
 
+    <RadioGroup
+        android:id="@+id/group"
+        android:layout_width="match_parent"
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
@@ -23,6 +26,8 @@
         android:id="@+id/img_404"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:src="@drawable/undraw_page_not_found_re_e9o6"
         android:visibility="gone"
@@ -53,8 +58,76 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/button1"
+            android:layout_width="10dp"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:background="@drawable/radio_group_selector"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:text="1d"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:background="@drawable/radio_group_selector"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:text="7d"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/button3"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:background="@drawable/radio_group_selector"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:text="30d"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/button4"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:background="@drawable/radio_group_selector"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:text="60d"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/button5"
+            android:layout_width="10dp"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:background="@drawable/radio_group_selector"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:text="90d"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/button6"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:background="@drawable/radio_group_selector"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:text="1y"
+            android:textColor="@android:color/black" />
+
+
+    </RadioGroup>
 
 
 
