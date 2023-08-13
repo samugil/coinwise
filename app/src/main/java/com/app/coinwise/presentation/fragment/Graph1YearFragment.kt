@@ -31,11 +31,11 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
     private lateinit var lineChartBitcoin: LineChart
     private lateinit var textViewData: TextView
     private lateinit var textViewOpen: TextView
-    private lateinit var textViewMaximo: TextView
-    private lateinit var textViewMedia: TextView
+    private lateinit var textViewMax: TextView
+    private lateinit var textViewAverage: TextView
     private lateinit var textViewClose: TextView
-    private lateinit var textViewMinimo: TextView
-    private lateinit var textViewDiferenca: TextView
+    private lateinit var textViewMin: TextView
+    private lateinit var textViewChange: TextView
 
     private val viewModel : Graph1YearViewModel by lazy {
         Graph1YearViewModel.create(requireActivity().application)
@@ -53,11 +53,11 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         lineChartBitcoin = view.findViewById(R.id.line_chart_bitcoin_1year)
         textViewData = view.findViewById(R.id.text_view_dados_1year)
         textViewOpen = view.findViewById(R.id.text_view_open_1year)
-        textViewMaximo = view.findViewById(R.id.text_view_maximo_1year)
-        textViewMedia = view.findViewById(R.id.text_view_media_1year)
+        textViewMax = view.findViewById(R.id.text_view_maximo_1year)
+        textViewAverage = view.findViewById(R.id.text_view_media_1year)
         textViewClose = view.findViewById(R.id.text_view_close_1year)
-        textViewMinimo = view.findViewById(R.id.text_view_minimo_1year)
-        textViewDiferenca = view.findViewById(R.id.text_view_diferenca_1year)
+        textViewMin = view.findViewById(R.id.text_view_minimo_1year)
+        textViewChange = view.findViewById(R.id.text_view_diferenca_1year)
         setUpLineCharts()
 
     }
@@ -114,14 +114,15 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         val formattedAverageValue = String.format("%.2f", averageValue)
         val firstEntryYValue = entries.firstOrNull()?.y ?: 0f
         val lastEntryYValue = entries.lastOrNull()?.y ?: 0f
-        val difference = lastEntryYValue - firstEntryYValue
+        val change = lastEntryYValue - firstEntryYValue
+        val formattedChange = String.format("%.2f", change)
 
-        textViewMaximo.text = "Máx: US$ $highestValue"
-        textViewMedia.text = "Média: US$ $formattedAverageValue"
+        textViewMax.text = "Max: US$ $highestValue"
+        textViewAverage.text = "Average: US$ $formattedAverageValue"
         textViewOpen.text = "Open: US$ $firstEntryYValue"
         textViewClose.text = "Close: US$ $lastEntryYValue"
-        textViewMinimo.text = "Min: US$ $lowestValue"
-        textViewDiferenca.text = "Diferença: US$ $difference"
+        textViewMin.text = "Min: US$ $lowestValue"
+        textViewChange.text = "Change: US$ $formattedChange"
 
         val lineDataSet = LineDataSet(entries, "Bitcoin Price")
         lineDataSet.color = resources.getColor(R.color.green_500)

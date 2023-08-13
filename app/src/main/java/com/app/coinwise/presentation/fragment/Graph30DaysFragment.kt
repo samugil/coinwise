@@ -1,5 +1,6 @@
 package com.app.coinwise.presentation.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.net.ConnectivityManager
@@ -30,6 +31,12 @@ class Graph30DaysFragment : Fragment(), OnChartValueSelectedListener {
 
     private lateinit var lineChartBitcoin: LineChart
     private lateinit var textViewData: TextView
+    private lateinit var textViewOpen: TextView
+    private lateinit var textViewMax: TextView
+    private lateinit var textViewAverage: TextView
+    private lateinit var textViewClose: TextView
+    private lateinit var textViewMin: TextView
+    private lateinit var textViewChange: TextView
 
     private val viewModel : Graph1YearViewModel by lazy {
         Graph1YearViewModel.create(requireActivity().application)
@@ -39,7 +46,6 @@ class Graph30DaysFragment : Fragment(), OnChartValueSelectedListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_graph30_days, container, false)
     }
 
@@ -47,6 +53,12 @@ class Graph30DaysFragment : Fragment(), OnChartValueSelectedListener {
         super.onViewCreated(view, savedInstanceState)
         lineChartBitcoin = view.findViewById(R.id.line_chart_bitcoin_30days)
         textViewData = view.findViewById(R.id.text_view_dados_30days)
+        textViewOpen = view.findViewById(R.id.text_view_open_30days)
+        textViewMax = view.findViewById(R.id.text_view_maximo_30days)
+        textViewAverage = view.findViewById(R.id.text_view_media_30days)
+        textViewClose = view.findViewById(R.id.text_view_close_30days)
+        textViewMin = view.findViewById(R.id.text_view_minimo_30days)
+        textViewChange = view.findViewById(R.id.text_view_diferenca_30days)
         setUpLineCharts()
 
     }
@@ -84,6 +96,7 @@ class Graph30DaysFragment : Fragment(), OnChartValueSelectedListener {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun updateLineChart(bitcoinList: List<Value>) {
         val last30BitcoinList = bitcoinList.takeLast(30)
         val entries = last30BitcoinList.mapIndexed { _, value ->
@@ -94,6 +107,22 @@ class Graph30DaysFragment : Fragment(), OnChartValueSelectedListener {
         entries.forEachIndexed { index, entry ->
             Log.d("Entry Debug", "Entry $index - x: ${entry.x}, y: ${entry.y}")
         }
+
+        val highestValue = entries.maxByOrNull { it.y }?.y ?: 0f
+        val lowestValue = entries.minByOrNull { it.y }?.y ?: 0f
+        val averageValue = entries.map { it.y }.average()
+        val formattedAverageValue = String.format("%.2f", averageValue)
+        val firstEntryYValue = entries.firstOrNull()?.y ?: 0f
+        val lastEntryYValue = entries.lastOrNull()?.y ?: 0f
+        val change = lastEntryYValue - firstEntryYValue
+        val formattedChange = String.format("%.2f", change)
+
+        textViewMax.text = "Max: US$ $highestValue"
+        textViewAverage.text = "Average: US$ $formattedAverageValue"
+        textViewOpen.text = "Open: US$ $firstEntryYValue"
+        textViewClose.text = "Close: US$ $lastEntryYValue"
+        textViewMin.text = "Min: US$ $lowestValue"
+        textViewChange.text = "Change: US$ $formattedChange"
 
         val lineDataSet = LineDataSet(entries, "Bitcoin Price")
         lineDataSet.color = resources.getColor(R.color.green_500)
