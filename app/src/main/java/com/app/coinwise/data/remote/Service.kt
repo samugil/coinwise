@@ -4,7 +4,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface Service {
-    @GET("charts/transactions-per-second?timespan=5weeks&rollingAverage=8hours&format=json")
+    @GET("charts/market-price")
     suspend fun getChartItemsApi(): Response<ItemDto>
 
 }

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.coinwise.R
@@ -59,9 +60,7 @@ class MainActivity : AppCompatActivity() {
             }
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
-
     }
-
 
     override fun onStart() {
         super.onStart()
@@ -70,7 +69,16 @@ class MainActivity : AppCompatActivity() {
             viewModel.refreshChartItem()
         } else {
             viewModel.chartItem.observe(this) { chartItem ->
-                updateLineChart(chartItem.values)
+                val bitcoinList = chartItem.values
+                val lastValueIndex = bitcoinList.size - 1
+
+                var yesterdayPrice = 0.0
+
+                if (lastValueIndex >= 1) {
+                    yesterdayPrice = bitcoinList[lastValueIndex - 1].y
+                }
+
+                updateLineChart(bitcoinList, yesterdayPrice)
             }
         }
     }
@@ -102,11 +110,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun updateLineChart(bitcoinList: List<Value>) {
+    private fun updateLineChart(bitcoinList: List<Value>, yesterdayPrice: Double) {
         val entries = bitcoinList.mapIndexed { _, listDTO ->
             Entry(listDTO.x.toFloat(), listDTO.y.toFloat())
         }
+
         val lineDataSet = LineDataSet(entries, "Bitcoin Price")
         lineDataSet.color = resources.getColor(R.color.green_500)
         lineDataSet.circleRadius = 1f
@@ -120,6 +128,28 @@ class MainActivity : AppCompatActivity() {
         val lineData = LineData(dataSets)
         lineChartBitcoin.data = lineData
         lineChartBitcoin.invalidate()
+
+        val todayValue = bitcoinList.lastOrNull()
+        val todayPrice = todayValue?.y ?: 0.0
+        val percentageChange = ((todayPrice - yesterdayPrice) / yesterdayPrice) * 100.0
+
+        val percentageTextView = findViewById<TextView>(R.id.tv_percentage)
+        val greenArrowImageView = findViewById<ImageView>(R.id.img_up)
+        val redArrowImageView = findViewById<ImageView>(R.id.img_down)
+
+        if (percentageChange > 0) {
+            greenArrowImageView.visibility = View.VISIBLE
+            redArrowImageView.visibility = View.GONE
+        } else if (percentageChange < 0) {
+            greenArrowImageView.visibility = View.GONE
+            redArrowImageView.visibility = View.VISIBLE
+        } else {
+            greenArrowImageView.visibility = View.GONE
+            redArrowImageView.visibility = View.GONE
+        }
+
+        percentageTextView.text = String.format("%.2f%%", percentageChange)
+        percentageTextView.visibility = View.VISIBLE
 
     }
 
