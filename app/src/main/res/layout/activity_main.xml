@@ -4,15 +4,74 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="60dp"
-    tools:context=".presentation.MainActivity">
+    tools:context=".presentation.activity.MainActivity">
 
-    <com.github.mikephil.charting.charts.LineChart
+    <Button
+        android:id="@+id/button_7days_fragment_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7D"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/fragment_container_view"
+        app:layout_constraintEnd_toStartOf="@id/button_30days_fragment_test"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_30days_fragment_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="30D"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/fragment_container_view"
+        app:layout_constraintEnd_toStartOf="@id/button_60days_fragment_test"
+        app:layout_constraintStart_toEndOf="@id/button_7days_fragment_test"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_60days_fragment_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="60D"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/fragment_container_view"
+        app:layout_constraintEnd_toStartOf="@id/button_90days_fragment_test"
+        app:layout_constraintStart_toEndOf="@id/button_30days_fragment_test"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_90days_fragment_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="90D"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/fragment_container_view"
+        app:layout_constraintEnd_toStartOf="@id/button_1year_fragment_test"
+        app:layout_constraintStart_toEndOf="@id/button_60days_fragment_test"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_1year_fragment_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1Y"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/fragment_container_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/button_90days_fragment_test"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
-        android:id="@+id/line_chart_bitcoin"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout="@layout/fragment_graph1_year" />
 
     <ImageView
         android:id="@+id/img_404"

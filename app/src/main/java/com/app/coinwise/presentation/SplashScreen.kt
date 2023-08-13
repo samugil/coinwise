@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.app.coinwise.R
+import com.app.coinwise.presentation.activity.MainActivity
 
 class SplashScreen : AppCompatActivity() {
 
