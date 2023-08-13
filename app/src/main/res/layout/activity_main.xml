@@ -84,6 +84,90 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/text_btc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_bellow="@id/text_btc"
+        android:layout_marginTop="16dp"
+        android:text="Bitcoin (BTC)"
+        android:textSize="12dp"
+        android:maxLength="15" />
+
+
+    <TextView
+        android:id="@+id/text_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="430dp"
+        android:text="PRICE"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_btc" />
+
+    <TextView
+        android:id="@+id/text_open"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="450dp"
+        android:text="Open"
+        android:textSize="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_btc"
+        app:layout_constraintVertical_bias="0.502"
+        tools:layout_editor_absoluteX="-16dp" />
+
+    <TextView
+        android:id="@+id/text_higth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="460dp"
+        android:text="Higth"
+        android:textSize="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_btc" />
+
+    <TextView
+        android:id="@+id/text_average"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="470dp"
+        android:text="Average"
+        android:textSize="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_btc" />
+
+    <TextView
+        android:id="@+id/text_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="450dp"
+        android:layout_marginLeft="220dp"
+        android:text="Close"
+        android:textSize="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_btc" />
+
+    <TextView
+        android:id="@+id/text_low"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="460dp"
+        android:layout_marginLeft="220dp"
+        android:text="Low"
+        android:textSize="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_btc" />
+
+    <TextView
+        android:id="@+id/text_change"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -126,10 +210,40 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/emptystategreen"
         android:visibility="gone"
+        android:layout_marginTop="470dp"
+        android:layout_marginLeft="220dp"
+        android:text="Change"
+        android:textSize="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_btc" />
+
+    <TextView
+        android:id="@+id/text_aboutchart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="540dp"
+        android:text="About Chart"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_btc" />
+
+    <TextView
+        android:id="@+id/text_textaboutchart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="560dp"
+        android:text="Average USD market price across major bitcoin exchanges."
+        android:textSize="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_btc" />
+
+
 
 
 
