@@ -58,6 +58,9 @@ dependencies {
     val fragment_version = "1.5.6"
     implementation ("androidx.fragment:fragment-ktx:$fragment_version")
 
+    //Refresh
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+
     //Network
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")

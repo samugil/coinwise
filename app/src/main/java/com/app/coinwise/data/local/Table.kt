@@ -12,5 +12,4 @@ data class Table(
     val status: String,
     val unit: String,
     val values: List<Value>
-
 )
