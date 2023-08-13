@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.fragment.app.commit
 import com.app.coinwise.R
@@ -23,11 +24,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var img404: ImageView
     private lateinit var img500: ImageView
     private lateinit var img333: ImageView
-    private lateinit var button1YearFragment: Button
-    private lateinit var button90DaysFragment: Button
-    private lateinit var button60DaysFragment: Button
-    private lateinit var button30DaysFragment: Button
-    private lateinit var button7DaysFragment: Button
+    private lateinit var button1YearFragment: RadioButton
+    private lateinit var button90DaysFragment: RadioButton
+    private lateinit var button60DaysFragment: RadioButton
+    private lateinit var button30DaysFragment: RadioButton
+    private lateinit var button7DaysFragment: RadioButton
 
     private val viewModel: GraficoViewModel by lazy {
         GraficoViewModel.create(application)
@@ -37,11 +38,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        button1YearFragment = findViewById(R.id.button_1year_fragment_test)
-//        button90DaysFragment = findViewById(R.id.button_90days_fragment_test)
-//        button60DaysFragment = findViewById(R.id.button_60days_fragment_test)
-//        button30DaysFragment = findViewById(R.id.button_30days_fragment_test)
-//        button7DaysFragment = findViewById(R.id.button_7days_fragment_test)
+        button1YearFragment = findViewById(R.id.button_1year_fragment)
+        button90DaysFragment = findViewById(R.id.button_90days_fragment)
+        button60DaysFragment = findViewById(R.id.button_60days_fragment)
+        button30DaysFragment = findViewById(R.id.button_30days_fragment)
+        button7DaysFragment = findViewById(R.id.button_7days_fragment)
         img404 = findViewById(R.id.img_404)
         img500 = findViewById(R.id.img_500)
         img333 = findViewById(R.id.img_333)
@@ -57,40 +58,40 @@ class MainActivity : AppCompatActivity() {
             setReorderingAllowed(true)
         }
 
-//        button1YearFragment.setOnClickListener {
-//            supportFragmentManager.commit {
-//                replace(R.id.fragment_container_view, graph1YearFragment)
-//                setReorderingAllowed(true)
-//            }
-//        }
+        button1YearFragment.setOnClickListener {
+            supportFragmentManager.commit {
+                replace(R.id.fragment_container_view, graph1YearFragment)
+                setReorderingAllowed(true)
+            }
+        }
 
-//        button90DaysFragment.setOnClickListener {
-//            supportFragmentManager.commit {
-//                replace(R.id.fragment_container_view, graph90DaysFragment)
-//                setReorderingAllowed(true)
-//            }
-//        }
-//
-//        button60DaysFragment.setOnClickListener {
-//            supportFragmentManager.commit {
-//                replace(R.id.fragment_container_view, graph60DaysFragment)
-//                setReorderingAllowed(true)
-//            }
-//        }
-//
-//        button30DaysFragment.setOnClickListener {
-//            supportFragmentManager.commit {
-//                replace(R.id.fragment_container_view, graph30DaysFragment)
-//                setReorderingAllowed(true)
-//            }
-//        }
-//
-//        button7DaysFragment.setOnClickListener {
-//            supportFragmentManager.commit {
-//                replace(R.id.fragment_container_view, graph7DaysFragment)
-//                setReorderingAllowed(true)
-//            }
-//        }
+        button90DaysFragment.setOnClickListener {
+            supportFragmentManager.commit {
+                replace(R.id.fragment_container_view, graph90DaysFragment)
+                setReorderingAllowed(true)
+            }
+        }
+
+        button60DaysFragment.setOnClickListener {
+            supportFragmentManager.commit {
+                replace(R.id.fragment_container_view, graph60DaysFragment)
+                setReorderingAllowed(true)
+            }
+        }
+
+        button30DaysFragment.setOnClickListener {
+            supportFragmentManager.commit {
+                replace(R.id.fragment_container_view, graph30DaysFragment)
+                setReorderingAllowed(true)
+            }
+        }
+
+        button7DaysFragment.setOnClickListener {
+            supportFragmentManager.commit {
+                replace(R.id.fragment_container_view, graph7DaysFragment)
+                setReorderingAllowed(true)
+            }
+        }
 
         viewModel.errorLiveData.observe(this) { errorMsg ->
             img404.visibility = if (errorMsg == 404) View.VISIBLE else View.GONE
