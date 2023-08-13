@@ -12,7 +12,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.coinwise.R
 import com.app.coinwise.data.local.Value
 import com.app.coinwise.presentation.viewmodel.Graph1YearViewModel
@@ -28,6 +31,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 
 class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
 
+    private lateinit var swipeToRefresh: SwipeRefreshLayout
     private lateinit var lineChartBitcoin: LineChart
     private lateinit var textViewData: TextView
     private lateinit var textViewOpen: TextView
@@ -36,6 +40,10 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
     private lateinit var textViewClose: TextView
     private lateinit var textViewMin: TextView
     private lateinit var textViewChange: TextView
+    private lateinit var percentageTextView :TextView
+    private lateinit var greenArrowImageView :ImageView
+    private lateinit var redArrowImageView :ImageView
+
 
     private val viewModel : Graph1YearViewModel by lazy {
         Graph1YearViewModel.create(requireActivity().application)
@@ -50,6 +58,10 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        swipeToRefresh = view.findViewById(R.id.swipeToRefresh)
+        refreshApp()
+
         lineChartBitcoin = view.findViewById(R.id.line_chart_bitcoin_1year)
         textViewData = view.findViewById(R.id.text_view_dados_1year)
         textViewOpen = view.findViewById(R.id.text_view_open_1year)
@@ -58,7 +70,13 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         textViewClose = view.findViewById(R.id.text_view_close_1year)
         textViewMin = view.findViewById(R.id.text_view_minimo_1year)
         textViewChange = view.findViewById(R.id.text_view_diferenca_1year)
+        percentageTextView = view.findViewById<TextView>(R.id.tv_percentage)
+        greenArrowImageView =view.findViewById<ImageView>(R.id.img_up)
+        redArrowImageView =view.findViewById<ImageView>(R.id.img_down)
         setUpLineCharts()
+
+
+
 
     }
 
@@ -69,12 +87,28 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
             viewModel.refreshChartItem()
             viewModel.chartItem.observe(this) { chartItem ->
                 if(chartItem != null) {
-                    updateLineChart(chartItem.values)
+                    val itemChartValue = chartItem.values
+                    val lastValueIndex = itemChartValue.size - 1
+
+                    var yesterdayPrice = 0.0
+
+                    if (lastValueIndex >= 1) {
+                        yesterdayPrice = itemChartValue[lastValueIndex - 1].y
+                    }
+                    updateLineChart(chartItem.values, yesterdayPrice)
                 }
             }
         } else {
             viewModel.chartItem.observe(this) { chartItem ->
-                updateLineChart(chartItem.values)
+                val itemChartValue = chartItem.values
+                val lastValueIndex = itemChartValue.size - 1
+
+                var yesterdayPrice = 0.0
+
+                if (lastValueIndex >= 1) {
+                    yesterdayPrice = itemChartValue[lastValueIndex - 1].y
+                }
+                updateLineChart(chartItem.values, yesterdayPrice)
             }
         }
     }
@@ -98,7 +132,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
 
 
     @SuppressLint("SetTextI18n")
-    private fun updateLineChart(bitcoinList: List<Value>) {
+    private fun updateLineChart(bitcoinList: List<Value>, yesterdayPrice: Double) {
         val entries = bitcoinList.mapIndexed { _, value ->
             Entry(value.x.toFloat(), value.y.toFloat())
         }
@@ -150,6 +184,25 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
             }
         }
 
+        val todayValue = bitcoinList.lastOrNull()
+        val todayPrice = todayValue?.y ?: 0.0
+        val percentageChange = ((todayPrice - yesterdayPrice) / yesterdayPrice) * 100.0
+
+
+        if (percentageChange > 0) {
+            greenArrowImageView.visibility = View.VISIBLE
+            redArrowImageView.visibility = View.GONE
+        } else if (percentageChange < 0) {
+            greenArrowImageView.visibility = View.GONE
+            redArrowImageView.visibility = View.VISIBLE
+        } else {
+            greenArrowImageView.visibility = View.GONE
+            redArrowImageView.visibility = View.GONE
+        }
+
+        percentageTextView.text = String.format("%.2f%%", percentageChange)
+        percentageTextView.visibility = View.VISIBLE
+
         lineChartBitcoin.invalidate()
     }
 
@@ -185,6 +238,49 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
 
         val yAxisRight = lineChartBitcoin.axisRight
         yAxisRight.isEnabled = false
+    }
+
+    private fun refreshApp() {
+
+        swipeToRefresh.setOnRefreshListener {
+
+            if (isNetworkAvailable(requireContext())) {
+                viewModel.refreshChartItem()
+                viewModel.chartItem.observe(requireActivity()) { chartItem ->
+                    if(chartItem != null) {
+                        val itemChartValue = chartItem.values
+                        val lastValueIndex = itemChartValue.size - 1
+
+                        var yesterdayPrice = 0.0
+
+                        if (lastValueIndex >= 1) {
+                            yesterdayPrice = itemChartValue[lastValueIndex - 1].y
+                        }
+
+                        updateLineChart(chartItem.values, yesterdayPrice)
+                        Toast.makeText(requireActivity(), "Pagina atualizada", Toast.LENGTH_SHORT).show()
+                        swipeToRefresh.isRefreshing = false
+                    }
+
+                }
+            } else {
+                viewModel.chartItem.observe(requireActivity()) { chartItem ->
+                    val itemChartValue = chartItem.values
+                    val lastValueIndex = itemChartValue.size - 1
+
+                    var yesterdayPrice = 0.0
+
+                    if (lastValueIndex >= 1) {
+                        yesterdayPrice = itemChartValue[lastValueIndex - 1].y
+                    }
+                    updateLineChart(chartItem.values, yesterdayPrice)
+                    Toast.makeText(requireActivity(), "Sem Internet, Dados apresentadados localmente.", Toast.LENGTH_SHORT).show()
+                    swipeToRefresh.isRefreshing = false
+                }
+            }
+
+
+        }
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
