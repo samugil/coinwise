@@ -62,7 +62,7 @@ Vitor Branco (follow me on [LinkedIn](https://br.linkedin.com/in/vitor-xatara-br
 ```
 The MIT License (MIT)
 
-Copyright (c) 2023 Samuel Rocha Gil
+Copyright (c) 2023 Giovanna Reis; Samuel Rocha Gil; Victor Boico; Vinicius Costa; Vitor Branco.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
