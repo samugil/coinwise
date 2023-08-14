@@ -7,18 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.coinwise.data.local.AppDataBase
-import com.app.coinwise.data.local.Table
 import com.app.coinwise.repository.CoinWiseRepository
 import com.app.coinwise.data.remote.RetrofitModule
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class GraficoViewModel(private val repository: CoinWiseRepository): ViewModel() {
-
-
-    val chartItem: LiveData<Table> = repository.chartItem
 
 
     private val _errorLiveData = MutableLiveData<Int>()
@@ -47,11 +41,6 @@ class GraficoViewModel(private val repository: CoinWiseRepository): ViewModel() 
         }
     }
 
-    fun convertUnixTimestampToDateFormat(unixTimestamp: Int): String {
-        val date = Date(unixTimestamp.toLong() * 1000)
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        return sdf.format(date)
-    }
 
     companion object{
         fun create(application: Application): GraficoViewModel {

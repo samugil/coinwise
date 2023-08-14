@@ -19,7 +19,7 @@ class Graph1YearViewModel(private val repository: CoinWiseRepository) : ViewMode
     val chartItem: LiveData<Table> = repository.chartItem
 
     private val _errorLiveData = MutableLiveData<Int>()
-    val errorLiveData: LiveData<Int> = _errorLiveData
+
 
     init {
         refreshChartItem()
