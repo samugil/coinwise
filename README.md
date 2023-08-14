@@ -9,12 +9,13 @@ A aplicação tem como objetivo apresentar o valor atual de mercado da moeda sel
 
 ## :camera_flash: Screenshots
 <!-- You can add more screenshots here if you like -->
-<img src="/results/Tela Inicial.png" width="260">&emsp;<img src="/results/Tela principal.png" width="260">&emsp;<img src="/results/Tela principal com dados.png" width="260">&emsp;<img src="/results/Resultado.png" width="260">
+<img src="/result/splashScreenLigthMode.png" width="260">&emsp;<img src="/result/graphicLigthMode.png" width="260">&emsp;<img src="/result/graphicLigthModeDetail.png" width="260">&emsp;<img src="/result/splachScreenDarkMode.png" width="260">;<img src="/result/graphicDarkModee.png" width="260">
 
 ## Tecnologias
 * Kotlin
 * Activity para host de telas
 * ViewGroup
+    * View Model
     * ConstraintLayout
     * SwipeRefreshLayout
     * LinearLayout      
@@ -26,22 +27,22 @@ A aplicação tem como objetivo apresentar o valor atual de mercado da moeda sel
     - RadioButton
     - LineChart
     - FragmentContainerView
+    - Styles
+    - Themes Dark and Ligth
+    - Empty state and Error
 - Toast para display de mensagens
 - Intent Explicita para abrir a segunda Activity
 - CompanionObject para abrir os Fragments
 - FindViewById para recuperar components de UI
 - Splash Screen
-- Styles
-- Themes Dark and Ligth
 - Icon
 - Functions
 - Modo OffLine
 - ROOM Data Base
 - API Connection
-- MVVM
 - Retrofit
-- Empty state and Error
-- View Model
+-Architecture
+   - MVVM
 
 
 
