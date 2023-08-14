@@ -3,7 +3,6 @@ package com.app.coinwise.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
@@ -106,8 +105,4 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
     }
-
-
-
-
 }

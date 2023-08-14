@@ -253,7 +253,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
 
             if (isNetworkAvailable(requireContext())) {
                 viewModel.refreshChartItem()
-                viewModel.chartItem.observe(requireActivity()) { chartItem ->
+                viewModel.chartItem.observe(viewLifecycleOwner) { chartItem ->
                     if (chartItem != null) {
                         val itemChartValue = chartItem.values
                         val lastValueIndex = itemChartValue.size - 1
@@ -271,7 +271,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
                     }
                 }
             } else {
-                viewModel.chartItem.observe(requireActivity()) { chartItem ->
+                viewModel.chartItem.observe(viewLifecycleOwner) { chartItem ->
                     val itemChartValue = chartItem.values
                     val lastValueIndex = itemChartValue.size - 1
 

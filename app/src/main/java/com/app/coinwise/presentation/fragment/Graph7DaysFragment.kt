@@ -117,7 +117,7 @@ class Graph7DaysFragment : Fragment(), OnChartValueSelectedListener {
     }
 
 
-    fun isNetworkAvailable(context: Context): Boolean {
+    private fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
@@ -256,7 +256,7 @@ class Graph7DaysFragment : Fragment(), OnChartValueSelectedListener {
 
             if (isNetworkAvailable(requireContext())) {
                 viewModel.refreshChartItem()
-                viewModel.chartItem.observe(requireActivity()) { chartItem ->
+                viewModel.chartItem.observe(viewLifecycleOwner) { chartItem ->
                     if(chartItem != null) {
                         val itemChartValue = chartItem.values
                         val lastValueIndex = itemChartValue.size - 1
@@ -273,7 +273,7 @@ class Graph7DaysFragment : Fragment(), OnChartValueSelectedListener {
                     }
                 }
             } else {
-                viewModel.chartItem.observe(requireActivity()) { chartItem ->
+                viewModel.chartItem.observe(viewLifecycleOwner) { chartItem ->
                     val itemChartValue = chartItem.values
                     val lastValueIndex = itemChartValue.size - 1
 

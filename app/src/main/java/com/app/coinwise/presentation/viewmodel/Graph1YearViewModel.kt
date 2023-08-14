@@ -16,18 +16,14 @@ import java.util.*
 
 class Graph1YearViewModel(private val repository: CoinWiseRepository) : ViewModel() {
 
-
     val chartItem: LiveData<Table> = repository.chartItem
-
 
     private val _errorLiveData = MutableLiveData<Int>()
     val errorLiveData: LiveData<Int> = _errorLiveData
 
-
     init {
         refreshChartItem()
     }
-
 
     fun refreshChartItem() {
         viewModelScope.launch {
