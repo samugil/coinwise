@@ -41,7 +41,7 @@ A aplicação tem como objetivo apresentar o valor atual de mercado da moeda sel
 - ROOM Data Base
 - API Connection
 - Retrofit
--Architecture
+- Architecture
    - MVVM
 
 
