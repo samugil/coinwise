@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.app.coinwise.R
 import com.app.coinwise.data.local.Value
@@ -28,6 +29,8 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import java.util.*
+import kotlin.collections.ArrayList
 
 class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
 
@@ -40,12 +43,13 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
     private lateinit var textViewClose: TextView
     private lateinit var textViewMin: TextView
     private lateinit var textViewChange: TextView
-    private lateinit var percentageTextView :TextView
-    private lateinit var greenArrowImageView :ImageView
-    private lateinit var redArrowImageView :ImageView
+    private lateinit var percentageTextView: TextView
+    private lateinit var greenArrowImageView: ImageView
+    private lateinit var redArrowImageView: ImageView
+    private lateinit var textViewTodaysPrice: TextView
 
 
-    private val viewModel : Graph1YearViewModel by lazy {
+    private val viewModel: Graph1YearViewModel by lazy {
         Graph1YearViewModel.create(requireActivity().application)
     }
 
@@ -59,7 +63,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        swipeToRefresh = view.findViewById(R.id.swipeToRefresh)
+        swipeToRefresh = view.findViewById(R.id.swipeToRefresh_1year)
         refreshApp()
 
         lineChartBitcoin = view.findViewById(R.id.line_chart_bitcoin_1year)
@@ -70,14 +74,12 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         textViewClose = view.findViewById(R.id.text_view_close_1year)
         textViewMin = view.findViewById(R.id.text_view_minimo_1year)
         textViewChange = view.findViewById(R.id.text_view_diferenca_1year)
-        percentageTextView = view.findViewById<TextView>(R.id.tv_percentage)
-        greenArrowImageView =view.findViewById<ImageView>(R.id.img_up)
-        redArrowImageView =view.findViewById<ImageView>(R.id.img_down)
+        percentageTextView = view.findViewById(R.id.tv_percentage_1year)
+        greenArrowImageView = view.findViewById(R.id.img_up_1year)
+        redArrowImageView = view.findViewById(R.id.img_down_1year)
+        textViewTodaysPrice = view.findViewById(R.id.tv_todays_price_1year)
+
         setUpLineCharts()
-
-
-
-
     }
 
     override fun onStart() {
@@ -86,7 +88,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         if (isNetworkAvailable(requireContext())) {
             viewModel.refreshChartItem()
             viewModel.chartItem.observe(this) { chartItem ->
-                if(chartItem != null) {
+                if (chartItem != null) {
                     val itemChartValue = chartItem.values
                     val lastValueIndex = itemChartValue.size - 1
 
@@ -133,6 +135,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
 
     @SuppressLint("SetTextI18n")
     private fun updateLineChart(bitcoinList: List<Value>, yesterdayPrice: Double) {
+
         val entries = bitcoinList.mapIndexed { _, value ->
             Entry(value.x.toFloat(), value.y.toFloat())
         }
@@ -145,11 +148,13 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         val highestValue = entries.maxByOrNull { it.y }?.y ?: 0f
         val lowestValue = entries.minByOrNull { it.y }?.y ?: 0f
         val averageValue = entries.map { it.y }.average()
-        val formattedAverageValue = String.format("%.2f", averageValue)
+        val formattedAverageValue = String.format(Locale.US, "%.2f", averageValue)
         val firstEntryYValue = entries.firstOrNull()?.y ?: 0f
         val lastEntryYValue = entries.lastOrNull()?.y ?: 0f
         val change = lastEntryYValue - firstEntryYValue
-        val formattedChange = String.format("%.2f", change)
+        val formattedChange = String.format(Locale.US, "%.2f", change)
+        val todaysPrice = entries.lastOrNull()?.y ?: 0f
+        val formattedTodaysPrice = String.format(Locale.US, "%.2f", todaysPrice)
 
         textViewMax.text = "Max: US$ $highestValue"
         textViewAverage.text = "Average: US$ $formattedAverageValue"
@@ -157,13 +162,16 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         textViewClose.text = "Close: US$ $lastEntryYValue"
         textViewMin.text = "Min: US$ $lowestValue"
         textViewChange.text = "Change: US$ $formattedChange"
+        textViewTodaysPrice.text = "US$ $formattedTodaysPrice"
+
+        val gradientDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.gradient_fill)
 
         val lineDataSet = LineDataSet(entries, "Bitcoin Price")
         lineDataSet.color = resources.getColor(R.color.green_500)
         lineDataSet.circleRadius = 1f
         lineDataSet.setDrawFilled(true)
-        lineDataSet.fillColor = resources.getColor((R.color.green_500))
-        lineDataSet.fillAlpha = 30
+        lineDataSet.fillDrawable = gradientDrawable
+        lineDataSet.fillAlpha = 20
         lineDataSet.setDrawCircles(false)
         lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
         lineDataSet.highLightColor = resources.getColor(R.color.black)
@@ -200,14 +208,13 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
             redArrowImageView.visibility = View.GONE
         }
 
-        percentageTextView.text = String.format("%.2f%%", percentageChange)
+        percentageTextView.text = String.format(Locale.US, "%.2f%%", percentageChange)
         percentageTextView.visibility = View.VISIBLE
 
         lineChartBitcoin.invalidate()
     }
 
     private fun setUpLineCharts() {
-        // 1 year chart
         lineChartBitcoin.setTouchEnabled(true)
         lineChartBitcoin.setPinchZoom(false)
         lineChartBitcoin.setBackgroundColor(resources.getColor(R.color.white))
@@ -247,7 +254,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
             if (isNetworkAvailable(requireContext())) {
                 viewModel.refreshChartItem()
                 viewModel.chartItem.observe(requireActivity()) { chartItem ->
-                    if(chartItem != null) {
+                    if (chartItem != null) {
                         val itemChartValue = chartItem.values
                         val lastValueIndex = itemChartValue.size - 1
 
@@ -258,10 +265,10 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
                         }
 
                         updateLineChart(chartItem.values, yesterdayPrice)
-                        Toast.makeText(requireActivity(), "Pagina atualizada", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireActivity(), "Pagina atualizada", Toast.LENGTH_SHORT)
+                            .show()
                         swipeToRefresh.isRefreshing = false
                     }
-
                 }
             } else {
                 viewModel.chartItem.observe(requireActivity()) { chartItem ->
@@ -274,12 +281,14 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
                         yesterdayPrice = itemChartValue[lastValueIndex - 1].y
                     }
                     updateLineChart(chartItem.values, yesterdayPrice)
-                    Toast.makeText(requireActivity(), "Sem Internet, Dados apresentadados localmente.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireActivity(),
+                        "Sem Internet, Dados apresentadados localmente.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     swipeToRefresh.isRefreshing = false
                 }
             }
-
-
         }
     }
 
@@ -289,7 +298,6 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
             val yValue = e.y
             val xValueFormatted = viewModel.convertUnixTimestampToDateFormat(xValue)
             textViewData.text = "$xValueFormatted - US$ $yValue"
-
         }
     }
 
@@ -298,7 +306,6 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance() =
             Graph1YearFragment()

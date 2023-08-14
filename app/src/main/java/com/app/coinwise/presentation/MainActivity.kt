@@ -1,6 +1,5 @@
 package com.app.coinwise.presentation
 
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -17,9 +16,7 @@ import com.app.coinwise.presentation.fragment.Graph7DaysFragment
 import com.app.coinwise.presentation.fragment.Graph90DaysFragment
 import com.app.coinwise.presentation.viewmodel.GraficoViewModel
 
-
 class MainActivity : AppCompatActivity() {
-
 
     private lateinit var img404: ImageView
     private lateinit var img500: ImageView
@@ -52,6 +49,9 @@ class MainActivity : AppCompatActivity() {
         val graph60DaysFragment = Graph60DaysFragment.newInstance()
         val graph30DaysFragment = Graph30DaysFragment.newInstance()
         val graph7DaysFragment = Graph7DaysFragment.newInstance()
+
+        button1YearFragment.isChecked = true
+        button1YearFragment.jumpDrawablesToCurrentState()
 
         supportFragmentManager.commit {
             replace(R.id.fragment_container_view, graph1YearFragment)

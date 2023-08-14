@@ -7,7 +7,7 @@
     tools:context=".presentation.fragment.Graph1YearFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeToRefresh"
+        android:id="@+id/swipeToRefresh_1year"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,152 +20,160 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_percentage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="18dp"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="14%" />
+            <TextView
+                android:id="@+id/tv_todays_price_1year"
+                style="@style/titulo_semibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="18dp"
+                tools:text="$64501.71"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/img_down"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="62dp"
-            android:layout_marginEnd="2dp"
-            android:src="@drawable/baseline_keyboard_double_arrow_down_24"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@+id/tv_percentage"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tv_percentage_1year"
+                style="@style/titulo_ligth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="18dp"
+                android:text="14%"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/line_chart_bitcoin_1year" />
 
-        <ImageView
-            android:id="@+id/img_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="62dp"
-            android:layout_marginEnd="2dp"
-            android:src="@drawable/baseline_keyboard_double_arrow_up_24"
-            android:visibility="gone"
-            app:layout_constraintEnd_toStartOf="@+id/tv_percentage"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/img_down_1year"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/baseline_keyboard_double_arrow_down_24"
+                android:visibility="gone"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintBottom_toTopOf="@+id/line_chart_bitcoin_1year"
+                app:layout_constraintEnd_toStartOf="@+id/tv_percentage_1year" />
 
+            <ImageView
+                android:id="@+id/img_up_1year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_keyboard_double_arrow_up_24"
+                android:visibility="gone"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintBottom_toTopOf="@+id/line_chart_bitcoin_1year"
+                app:layout_constraintEnd_toStartOf="@+id/tv_percentage_1year" />
 
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/line_chart_bitcoin_1year"
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_todays_price_1year" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/line_chart_bitcoin_1year"
-        android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_percentage" />
+            <TextView
+                android:id="@+id/text_view_dados_1year"
+                style="@style/titulo_ligth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Clique no gráfico para exibir os valores"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line_chart_bitcoin_1year" />
 
-    <TextView
-        android:id="@+id/text_view_dados_1year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Clique no gráfico para exibir os valores"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/titulo_ligth"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line_chart_bitcoin_1year" />
+            <TextView
+                android:id="@+id/text_view_bitcoin_btc_1year"
+                style="@style/titulo_semibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:text="Price"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_dados_1year" />
 
-    <TextView
-        android:id="@+id/text_view_bitcoin_btc_1year"
-        style="@style/titulo_semibold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
-        android:text="Bitcoin (BTC)"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_dados_1year" />
+            <TextView
+                android:id="@+id/text_view_open_1year"
+                style="@style/titulo_ligth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_bitcoin_btc_1year"
+                tools:text="Open" />
 
-    <TextView
-        style="@style/titulo_ligth"
-        android:layout_width="wrap_content"
-        android:id="@+id/text_view_open_1year"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        tools:text="Open"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_bitcoin_btc_1year" />
+            <TextView
+                android:id="@+id/text_view_maximo_1year"
+                style="@style/titulo_ligth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_open_1year"
+                tools:text="Máx" />
 
-    <TextView
-        style="@style/titulo_ligth"
-        android:layout_width="wrap_content"
-        android:id="@+id/text_view_maximo_1year"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
-        tools:text="Máx"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_open_1year" />
+            <TextView
+                android:id="@+id/text_view_media_1year"
+                style="@style/titulo_ligth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="4dp"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_maximo_1year"
+                tools:text="Average" />
 
-    <TextView
-        style="@style/titulo_ligth"
-        android:layout_width="wrap_content"
-        android:id="@+id/text_view_media_1year"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
-        tools:text="Average"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_maximo_1year" />
+            <TextView
+                android:id="@+id/text_view_close_1year"
+                style="@style/titulo_ligth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_bitcoin_btc_1year"
+                tools:text="Close" />
 
-    <TextView
-        style="@style/titulo_ligth"
-        android:layout_width="wrap_content"
-        android:id="@+id/text_view_close_1year"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="8dp"
-        tools:text="Close"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_bitcoin_btc_1year" />
+            <TextView
+                android:id="@+id/text_view_minimo_1year"
+                style="@style/titulo_ligth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_close_1year"
+                tools:text="Min" />
 
-    <TextView
-        style="@style/titulo_ligth"
-        android:layout_width="wrap_content"
-        android:id="@+id/text_view_minimo_1year"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="4dp"
-        tools:text="Min"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_close_1year" />
-
-    <TextView
-        style="@style/titulo_ligth"
-        android:layout_width="wrap_content"
-        android:id="@+id/text_view_diferenca_1year"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="4dp"
-        tools:text="Change"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_minimo_1year" />
+            <TextView
+                android:id="@+id/text_view_diferenca_1year"
+                style="@style/titulo_ligth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="20dp"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_minimo_1year"
+                tools:text="Change" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
