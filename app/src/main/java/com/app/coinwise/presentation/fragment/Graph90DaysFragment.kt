@@ -2,6 +2,7 @@ package com.app.coinwise.presentation.fragment
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -163,7 +164,10 @@ class Graph90DaysFragment : Fragment(), OnChartValueSelectedListener {
         textViewChange.text = "Change: US$ $formattedChange"
         textViewTodaysPrice.text = "US$ $formattedTodaysPrice"
 
-        val gradientDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.gradient_fill)
+        val gradientDrawable = when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> ContextCompat.getDrawable(requireContext(), R.drawable.gradient_fill_night)
+            else -> ContextCompat.getDrawable(requireContext(), R.drawable.gradient_fill_light)
+        }
 
         val lineDataSet = LineDataSet(entries, "Bitcoin Price")
         lineDataSet.color = resources.getColor(R.color.green_500)
@@ -216,7 +220,12 @@ class Graph90DaysFragment : Fragment(), OnChartValueSelectedListener {
     private fun setUpLineCharts() {
         lineChartBitcoin.setTouchEnabled(true)
         lineChartBitcoin.setPinchZoom(false)
-        lineChartBitcoin.setBackgroundColor(resources.getColor(R.color.white))
+
+        val backgroundColor = when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> resources.getColor(R.color.grayBackground)
+            else -> Color.WHITE
+        }
+        lineChartBitcoin.setBackgroundColor(backgroundColor)
         lineChartBitcoin.animateX(1000)
         lineChartBitcoin.description.isEnabled = false
         lineChartBitcoin.isDragEnabled = false
@@ -227,7 +236,13 @@ class Graph90DaysFragment : Fragment(), OnChartValueSelectedListener {
         lineChartBitcoin.legend.isEnabled = false
 
         val xAxis = lineChartBitcoin.xAxis
-        xAxis.textColor = resources.getColor(R.color.black)
+
+        val axisTextColor = when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> Color.WHITE
+            else -> Color.BLACK
+        }
+
+        xAxis.textColor = axisTextColor
         xAxis.textSize = 12f
         xAxis.labelCount = 3
         xAxis.setDrawAxisLine(false)
@@ -237,7 +252,7 @@ class Graph90DaysFragment : Fragment(), OnChartValueSelectedListener {
         val yAxisLeft = lineChartBitcoin.axisLeft
         yAxisLeft.setDrawLabels(true)
         yAxisLeft.setDrawAxisLine(false)
-        yAxisLeft.textColor = resources.getColor(R.color.black)
+        yAxisLeft.textColor = axisTextColor
         yAxisLeft.textSize = 12f
         yAxisLeft.axisLineColor = resources.getColor(R.color.black)
 

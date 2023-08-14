@@ -11,7 +11,7 @@
         <item name="colorSecondaryVariant">@color/grayDark</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/grayBackground</item>
         <!-- Customize your theme here. -->
 
         <item name="android:windowIsTranslucent">true</item>
