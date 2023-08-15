@@ -6,7 +6,6 @@ import com.app.coinwise.data.local.AppDataBase
 
 class CoinWiseApplication: Application() {
 
-
     private lateinit var dataBase: AppDataBase
     override fun onCreate() {
         super.onCreate()
@@ -16,5 +15,4 @@ class CoinWiseApplication: Application() {
         ).build()
 
     }
-
 }

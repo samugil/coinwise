@@ -1,6 +1,5 @@
 package com.app.coinwise.repository
 
-
 import com.app.coinwise.data.local.Dao
 import com.app.coinwise.data.local.Table
 import com.app.coinwise.data.local.Value
@@ -8,14 +7,11 @@ import com.app.coinwise.data.remote.ItemDto
 import com.app.coinwise.data.remote.Service
 import retrofit2.Response
 
-
-
 // Criando parametros das conexões local e remota.
 class CoinWiseRepository(
     private val local: Dao,
     private val remote: Service
 ) {
-
 
     val chartItem = local.getLastChartItem()
 
@@ -32,20 +28,16 @@ class CoinWiseRepository(
             bitcoin?.let { itemDto ->
                 insertChartItem(itemDto)
             }
-
         }
     }
 
-
-    private suspend fun insertChartItem(chartItem: ItemDto) {
+     suspend fun insertChartItem(chartItem: ItemDto) {
         val table = mapItemToChart(chartItem)
         local.insert(table)
-
     }
 
-
     // mapeamento dos dados, convertendo da base online para a base local.
-    private fun mapItemToChart(itemDto: ItemDto): Table {
+     fun mapItemToChart(itemDto: ItemDto): Table {
         return Table(
             description = itemDto.description,
             name = itemDto.name,
@@ -60,5 +52,4 @@ class CoinWiseRepository(
             }
         )
     }
-
 }
