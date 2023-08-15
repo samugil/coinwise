@@ -16,16 +16,4 @@ interface Dao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(bitcoin: Table)
 
-//    @Query("SELECT * FROM 'Table'")
-//    suspend fun getAll(): List<Table>
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insert(table: List<Value>?)
-//
-//    @Update(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun update(table: Table)
-//
-//    @Query("DELETE FROM 'Table' where id=:id")
-//    suspend fun delete(id: Int)
-
 }

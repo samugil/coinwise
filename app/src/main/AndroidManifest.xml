@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permissões para acesso a internet -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
@@ -19,6 +20,7 @@
         <activity
             android:name=".presentation.MainActivity"
             android:exported="false" />
+        <!-- Linha 26 adicionada para não permitir rotação de tela -->
         <activity
             android:name=".presentation.SplashScreen"
             android:screenOrientation="fullSensor"

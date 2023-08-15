@@ -25,6 +25,7 @@ class GraficoViewModel(private val repository: CoinWiseRepository): ViewModel() 
     }
 
 
+    // criando função para tratar estado de vazio e de erro.
     fun refreshChartItem() {
         viewModelScope.launch {
             try {
@@ -42,6 +43,7 @@ class GraficoViewModel(private val repository: CoinWiseRepository): ViewModel() 
     }
 
 
+    //Criando instancia do banco de dados.
     companion object{
         fun create(application: Application): GraficoViewModel {
             val bitcoinService = RetrofitModule.createService()

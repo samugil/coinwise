@@ -9,6 +9,8 @@ import com.app.coinwise.R
 
 class SplashScreen : AppCompatActivity() {
 
+
+    // Criada uma splash screen personalizada, com tempo de apresentação em tela
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)

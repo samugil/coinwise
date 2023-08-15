@@ -10,6 +10,7 @@ import retrofit2.Response
 
 
 
+// Criando parametros das conexões local e remota.
 class CoinWiseRepository(
     private val local: Dao,
     private val remote: Service
@@ -21,6 +22,8 @@ class CoinWiseRepository(
     suspend fun getChartItems(): Response<ItemDto> {
         return remote.getChartItemsApi1year("1year")
     }
+
+    //Pegando os dados da API para aplicar no gráfico, e fazendo o insert na base local (ROOM)
     suspend fun refreshChartItems() {
 
         val response = remote.getChartItemsApi1year("1year")
@@ -40,6 +43,8 @@ class CoinWiseRepository(
 
     }
 
+
+    // mapeamento dos dados, convertendo da base online para a base local.
     private fun mapItemToChart(itemDto: ItemDto): Table {
         return Table(
             description = itemDto.description,

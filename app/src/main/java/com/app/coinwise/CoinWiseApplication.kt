@@ -17,7 +17,4 @@ class CoinWiseApplication: Application() {
 
     }
 
-    fun getAppDataBase(): AppDataBase {
-        return dataBase
-    }
 }

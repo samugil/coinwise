@@ -41,6 +41,7 @@ class Graph1YearViewModel(private val repository: CoinWiseRepository) : ViewMode
         }
     }
 
+    // Criando função para converter a data vinda da API para o modelo DD/MM/AAAA.
     fun convertUnixTimestampToDateFormat(unixTimestamp: Int): String {
         val date = Date(unixTimestamp.toLong() * 1000)
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())

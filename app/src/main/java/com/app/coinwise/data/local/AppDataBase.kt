@@ -6,7 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-
+/*Criando a base de dados, a versão da base de dados foi
+alterada devido alterações realizdas no formato e nomes
+das tabelas e da própria base
+ */
 @Database(entities = [Table::class], version = 5)
 @TypeConverters(CoinWiseTypeConverter::class)
 abstract class AppDataBase : RoomDatabase(){

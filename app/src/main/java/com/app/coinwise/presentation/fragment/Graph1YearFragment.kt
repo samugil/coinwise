@@ -54,6 +54,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         Graph1YearViewModel.create(requireActivity().application)
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,12 +62,16 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         return inflater.inflate(R.layout.fragment_graph1_year, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Chamada da função para atualização da tela dentro do fragment
         swipeToRefresh = view.findViewById(R.id.swipeToRefresh_1year)
         refreshApp()
 
+
+        // recuperando os elementos do XML para criação do grafico.
         lineChartBitcoin = view.findViewById(R.id.line_chart_bitcoin_1year)
         textViewData = view.findViewById(R.id.text_view_dados_1year)
         textViewOpen = view.findViewById(R.id.text_view_open_1year)
@@ -80,12 +85,16 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         redArrowImageView = view.findViewById(R.id.img_down_1year)
         textViewTodaysPrice = view.findViewById(R.id.tv_todays_price_1year)
 
+        //Chamada da função para construção do grafico.
         setUpLineCharts()
     }
 
     override fun onStart() {
         super.onStart()
 
+        /*valida se ha internet ativa, se houver apresenta os dados diretamente da API,
+        fazendo também o insert dos dados no ROOM data base,
+         se não houver apresenta os dados armazenados no ROOM*/
         if (isNetworkAvailable(requireContext())) {
             viewModel.refreshChartItem()
             viewModel.chartItem.observe(this) { chartItem ->
@@ -117,6 +126,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
     }
 
 
+    //criando função para validar se ha ou não conexão com internet
     private fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -134,6 +144,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
     }
 
 
+    // Criando função para atualização do Gráfico.
     @SuppressLint("SetTextI18n")
     private fun updateLineChart(bitcoinList: List<Value>, yesterdayPrice: Double) {
 
@@ -218,6 +229,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         lineChartBitcoin.invalidate()
     }
 
+    //Criando função para criar os eixos X e Y para aplicar o gráfico.
     private fun setUpLineCharts() {
         lineChartBitcoin.setTouchEnabled(true)
         lineChartBitcoin.setPinchZoom(false)
@@ -262,6 +274,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         yAxisRight.isEnabled = false
     }
 
+    // criando função para realizar a atualização da tela e buscar novamente os dados da API e atualizar os dados no ROOM.
     private fun refreshApp() {
 
         swipeToRefresh.setOnRefreshListener {
@@ -307,6 +320,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
         }
     }
 
+    //Criando a função para apresentar os detalhes de valor no grafico.
     override fun onValueSelected(e: Entry?, h: Highlight?) {
         if (e != null) {
             val xValue = e.x.toInt()
@@ -317,7 +331,7 @@ class Graph1YearFragment : Fragment(), OnChartValueSelectedListener {
     }
 
     override fun onNothingSelected() {
-        textViewData.text = "Clique no gráfico para exibir os valores"
+        textViewData.text = getString(R.string.clique_no_grafico)
     }
 
     companion object {
