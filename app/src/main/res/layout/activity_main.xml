@@ -4,15 +4,141 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".presentation.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/text_btc"
+        style="@style/titulo_bold"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:maxLength="15"
+        android:text="Bitcoin (BTC)"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_btc">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/button_7days_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radio_group_selector"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:text="7d"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/button_30days_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/radio_group_selector"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:text="30d"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/button_60days_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/radio_group_selector"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:text="60d"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/button_90days_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/radio_group_selector"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:text="90d"
+            android:textColor="@android:color/black" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            android:id="@+id/button_1year_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/radio_group_selector"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:text="1y"
+            android:textColor="@android:color/black" />
+
+    </RadioGroup>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@id/linear_layout_texts"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group"
+        tools:layout="@layout/fragment_graph1_year" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout_texts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_container_view">
+
+        <TextView
+            android:id="@+id/text_aboutchart"
+            style="@style/titulo_semibold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="26dp"
+            android:text="About Chart"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/text_textaboutchart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_container_view" />
+
+        <TextView
+            android:id="@+id/text_textaboutchart"
+            style="@style/titulo_ligth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="50dp"
+            android:text="Average USD market price across major bitcoin exchanges."
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_aboutchart" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
