@@ -9,7 +9,7 @@ A aplicação tem como objetivo apresentar o valor atual de mercado da moeda sel
 
 ## :camera_flash: Screenshots
 <!-- You can add more screenshots here if you like -->
-<img src="/result/splashScreenLigthMode.png" width="260">&emsp;<img src="/result/graphicLigthMode.png" width="260">&emsp;<img src="/result/graphicLigthModeDetail.png" width="260">&emsp;<img src="/result/splachScreenDarkMode.png" width="260">;<img src="/result/graphicDarkModee.png" width="260">
+<img src="/result/splashScreenLigthMode.png" width="260">&emsp;<img src="/result/graphicLigthMode.png" width="260">&emsp;<img src="/result/graphicLigthModeDetail.png" width="260">&emsp;<img src="/result/splachScreenDarkMode.png" width="260">;<img src="/result/graphicDarkMode.png" width="260">
 
 ## Tecnologias
 * Kotlin
@@ -41,7 +41,8 @@ A aplicação tem como objetivo apresentar o valor atual de mercado da moeda sel
 - ROOM Data Base
 - API Connection
 - Retrofit
--Architecture
+
+* Architecture
    - MVVM
 
 
@@ -61,7 +62,7 @@ Vitor Branco (follow me on [LinkedIn](https://br.linkedin.com/in/vitor-xatara-br
 ```
 The MIT License (MIT)
 
-Copyright (c) 2023 Samuel Rocha Gil
+Copyright (c) 2023 Giovanna Reis; Samuel Rocha Gil; Victor Boico; Vinicius Costa; Vitor Branco.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
